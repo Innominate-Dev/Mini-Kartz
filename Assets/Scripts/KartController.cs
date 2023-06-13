@@ -14,6 +14,13 @@ public class KartController : MonoBehaviour
     private float _turnAmount;
     private bool isGrounded;
 
+    [Header("Drifting")]
+
+    int driftDirection;
+    float driftPower;
+    int driftMode = 0;
+    public bool drifting;
+
     [Header("Sound Manager")]
 
     [Tooltip("What audio clip should play when the kart starts?")]
@@ -35,7 +42,14 @@ public class KartController : MonoBehaviour
     [Tooltip("Maximum Pitch the Reverse sound will be at full Reverse speed")]
     [Range(0.1f, 2.0f)] public float ReverseSoundMaxPitch = 0.6f;
 
-
+    public MovementState state;
+    public enum MovementState
+    {
+        idle,
+        moving,
+        drifting,
+        knockedout
+    }
 
     private void Start()
     {
@@ -104,9 +118,20 @@ public class KartController : MonoBehaviour
     private void Drive()
     {
         _currentSpeed = _forwardAmount *= forwardSpeed;
+        state = MovementState.moving;
     }
     private void DriveNowhere()
     {
         _currentSpeed = 0;
+        state = MovementState.idle;
+    }
+
+    private void Drifting()
+    {
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            
+            //transform.Rotate()
+        }
     }
 }
