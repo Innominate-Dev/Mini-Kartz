@@ -118,8 +118,8 @@ public class KartController : MonoBehaviour
 
         if (drifting)
         {
-            //float control = (driftDirection == 1) ? ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, .5f, 2) : ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, 2, .5f);
-            //transform.rotation = Quaternion.(transform.rotation.x, Mathf.LerpAngle(transform.localEulerAngles.y, (1 * 15) * driftDirection, .2f), transform.rotation.z);
+            float control = (driftDirection == 1) ? ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, .5f, 2) : ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, 2, .5f);
+            transform.parent.localRotation = Quaternion.Euler(0, Mathf.LerpAngle(transform.parent.localEulerAngles.y, (control * 15) * driftDirection, .2f), 0);
             /// THE LINE ABOVE IS THE ISSUE OF THE DRIFTING/// IF YOU REMOVE IT WON'T DRIFT BUT IF YOU ADD IT DRIFTS ON THE RIGHT
         }
 
@@ -134,7 +134,7 @@ public class KartController : MonoBehaviour
         RaycastHit hit;
         isGrounded = Physics.Raycast(transform.position, -transform.up, out hit, 1, groundLayerMask);
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation, 0.1f);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation, 0.1f);
     }
 
     private void TurnHandler()
