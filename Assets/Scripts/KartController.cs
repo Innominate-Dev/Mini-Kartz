@@ -121,7 +121,7 @@ public class KartController : MonoBehaviour
         if (drifting)
         {
             float control = (driftDirection == 1) ? ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, .5f, 2) : ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, 2, .5f);
-            transform.parent.localRotation = Quaternion.Euler(0, Mathf.LerpAngle(transform.parent.localEulerAngles.y, (control * 15) * driftDirection, .2f), 0);
+            sphereRB.transform.localRotation = Quaternion.Euler(0, Mathf.LerpAngle(sphereRB.transform.localEulerAngles.y, (control * 15) * driftDirection, .2f), 0);
             /// THE LINE ABOVE IS THE ISSUE OF THE DRIFTING/// IF YOU REMOVE IT WON'T DRIFT BUT IF YOU ADD IT DRIFTS ON THE RIGHT
         }
 
@@ -155,7 +155,7 @@ public class KartController : MonoBehaviour
         //Forward Acceleration
         if (drifting)
         {
-            sphereRB.AddForce(-transform.transform.right * _currentSpeed, ForceMode.Acceleration);
+            sphereRB.AddForce(-sphereRB.transform.right * _currentSpeed, ForceMode.Acceleration);
         }
         else
         {
