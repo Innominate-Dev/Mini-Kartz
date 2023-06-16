@@ -91,13 +91,15 @@ public class KartController : MonoBehaviour
             RunningSound.pitch = Mathf.Lerp(0.3f, RunningSoundMaxPitch, _currentSpeed + (Mathf.Sin(Time.time) * .1f));
         }
 
-        if (Input.GetKey(KeyCode.LeftShift) && !drifting && Input.GetAxis("Horizontal") != 0)
+        if (Input.GetKey(KeyCode.LeftShift) && !drifting && Input.GetAxis("Horizontal") != 0) // Removed the condition "&& !drifting " so it can constantly stay drifting
         {
+            state = MovementState.drifting;
             drifting = true;
             driftDirection = Input.GetAxis("Horizontal") > 0 ? 1 : -1;
         }
         else
         {
+            state = MovementState.moving;
             drifting = false;
         }
 
