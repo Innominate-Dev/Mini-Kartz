@@ -62,6 +62,9 @@ public class KartController : MonoBehaviour
     {
         transform.position = sphereRB.transform.position;
 
+        currentRotate = Mathf.Lerp(currentRotate, rotate, Time.deltaTime * 4f); rotate = 0f;
+        //transform.Rotate(transform.rotation.x, currentRotate, transform.rotation.z);
+
         _forwardAmount = Input.GetAxis("Vertical");
         _turnAmount = Input.GetAxis("Horizontal");
 
@@ -106,13 +109,9 @@ public class KartController : MonoBehaviour
 
         if (drifting)
         {
-            float control;
-            if (driftDirection == 1)
-                control = 1;
-            else
-                control = -1;
 
-            //float control = (driftDirection == 1) ? ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, 0, 2) : ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, 2, 0);
+
+            float control = (driftDirection == 1) ? ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, 0, 2) : ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, 2, 0);
             float powerControl = (driftDirection == 1) ? ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, .2f, 1) : ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, 1, .2f);
             Steer(driftDirection, control);
             driftPower += powerControl;
@@ -125,7 +124,7 @@ public class KartController : MonoBehaviour
             /// THE LINE ABOVE IS THE ISSUE OF THE DRIFTING/// IF YOU REMOVE IT WON'T DRIFT BUT IF YOU ADD IT DRIFTS ON THE RIGHT
         }
 
-        currentRotate = Mathf.Lerp(currentRotate, rotate, Time.deltaTime * 4f); rotate = 0f;
+       
         TurnHandler();
         GroundCheckAndNormalHandler();
         //Drifting();
@@ -155,7 +154,7 @@ public class KartController : MonoBehaviour
         //Forward Acceleration
         if (drifting)
         {
-            sphereRB.AddForce(-sphereRB.transform.right * _currentSpeed, ForceMode.Acceleration);
+            sphereRB.AddForce(-transform.parent.right * _currentSpeed, ForceMode.Acceleration);
         }
         else
         {
@@ -163,7 +162,7 @@ public class KartController : MonoBehaviour
         }
 
         //Steering
-        //transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, transform.eulerAngles.y + transform.rotation.z, 0), Time.deltaTime * 5f);
+        transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, transform.eulerAngles.y + currentRotate, 0), Time.deltaTime * 5f);
 
         RaycastHit hitOn;
         RaycastHit hitNear;
