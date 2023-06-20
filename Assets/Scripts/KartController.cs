@@ -96,7 +96,7 @@ public class KartController : MonoBehaviour
             RunningSound.volume = Mathf.Lerp(0.1f, RunningSoundMaxVolume, _currentSpeed * Time.deltaTime);
             RunningSound.pitch = Mathf.Lerp(0.3f, RunningSoundMaxPitch, _currentSpeed + (Mathf.Sin(Time.time) * .1f));
         }
-        Debug.Log(Input.GetAxis("Horizontal"));
+
         if (Input.GetKey(KeyCode.LeftShift)  && Input.GetAxis("Horizontal") != 0) // Removed the condition "&& !drifting " so it can constantly stay drifting
         {
             state = MovementState.drifting;
@@ -112,12 +112,16 @@ public class KartController : MonoBehaviour
 
         if (drifting)
         {
-
-
+            Drift.volume = Mathf.Lerp(0.1f, RunningSoundMaxVolume, _currentSpeed * Time.deltaTime);
+            Drift.pitch = Mathf.Lerp(0.3f, RunningSoundMaxPitch, _currentSpeed + (Mathf.Sin(Time.time) * .1f));
             float control = (driftDirection == 1) ? ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, 0, 2) : ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, 2, 0);
             float powerControl = (driftDirection == 1) ? ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, .2f, 1) : ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, 1, .2f);
             Steer(driftDirection, control);
             driftPower += powerControl;
+        }
+        else
+        {
+            Drift.volume = Mathf.Lerp(0, Drift.volume, Time.deltaTime);
         }
 
         /*if (drifting)
@@ -217,5 +221,10 @@ public class KartController : MonoBehaviour
     public void Steer(int direction, float amount)
     {
         rotate = (_turnAmount * direction) * amount;
+    }
+
+    private void Boost()
+    {
+
     }
 }
