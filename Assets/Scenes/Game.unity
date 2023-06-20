@@ -395,12 +395,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 286335407}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 736445908}
-  m_Father: {fileID: 1106567983}
+  - {fileID: 6512936621907685119}
+  - {fileID: 1523747789}
+  m_Father: {fileID: 736445908}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &355830223
@@ -938,6 +939,8 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 256
+  kartNormal: {fileID: 286335408}
+  kartModel: {fileID: 6512936621907685119}
   drifting: 0
   StartSound: {fileID: 1096545379}
   IdleSound: {fileID: 864507596}
@@ -973,9 +976,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 6512936621907685119}
-  - {fileID: 1523747789}
-  m_Father: {fileID: 286335408}
+  - {fileID: 286335408}
+  m_Father: {fileID: 1106567983}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &738058278
@@ -1913,7 +1915,7 @@ Transform:
   m_LocalPosition: {x: -0.59000015, y: 0.58, z: -10.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 286335408}
+  - {fileID: 736445908}
   - {fileID: 782295389}
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -2252,7 +2254,7 @@ Transform:
   - {fileID: 179087775}
   - {fileID: 2104660848}
   - {fileID: 1050669329}
-  m_Father: {fileID: 736445908}
+  m_Father: {fileID: 286335408}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1523747790
@@ -3216,10 +3218,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3641496555731772260}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.008999825, y: -0.56500244, z: 0}
-  m_LocalScale: {x: 100.00004, y: 100.00009, z: 100.00004}
+  m_LocalPosition: {x: -0.0089998245, y: -0.56500244, z: 0}
+  m_LocalScale: {x: 100.00004, y: 100.0001, z: 100.000046}
   m_Children: []
-  m_Father: {fileID: 736445908}
+  m_Father: {fileID: 286335408}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &8163226866908363409

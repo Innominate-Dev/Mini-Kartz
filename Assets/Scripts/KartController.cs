@@ -9,6 +9,9 @@ public class KartController : MonoBehaviour
     [SerializeField] private float turnSpeed;
     [SerializeField] private LayerMask groundLayerMask;
 
+    public Transform kartNormal;
+    public Transform kartModel;
+
     private float gravity = 9.81f;
     private float _forwardAmount;
     private float _currentSpeed;
@@ -93,8 +96,8 @@ public class KartController : MonoBehaviour
             RunningSound.volume = Mathf.Lerp(0.1f, RunningSoundMaxVolume, _currentSpeed * Time.deltaTime);
             RunningSound.pitch = Mathf.Lerp(0.3f, RunningSoundMaxPitch, _currentSpeed + (Mathf.Sin(Time.time) * .1f));
         }
-
-        if (Input.GetKey(KeyCode.LeftShift) && !drifting && Input.GetAxis("Horizontal") != 0) // Removed the condition "&& !drifting " so it can constantly stay drifting
+        Debug.Log(Input.GetAxis("Horizontal"));
+        if (Input.GetKey(KeyCode.LeftShift)  && Input.GetAxis("Horizontal") != 0) // Removed the condition "&& !drifting " so it can constantly stay drifting
         {
             state = MovementState.drifting;
             drifting = true;
@@ -117,14 +120,24 @@ public class KartController : MonoBehaviour
             driftPower += powerControl;
         }
 
-        if (drifting)
+        /*if (drifting)
         {
             float control = (driftDirection == 1) ? ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, .5f, 2) : ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, 2, .5f);
             sphereRB.transform.localRotation = Quaternion.Euler(0, Mathf.LerpAngle(sphereRB.transform.localEulerAngles.y, (control * 15) * driftDirection, .2f), 0);
             /// THE LINE ABOVE IS THE ISSUE OF THE DRIFTING/// IF YOU REMOVE IT WON'T DRIFT BUT IF YOU ADD IT DRIFTS ON THE RIGHT
+        }*/
+
+        if (!drifting)
+        {
+            kartModel.parent.localRotation = Quaternion.Euler(0, Mathf.LerpAngle(kartModel.parent.localEulerAngles.y, ( 0* 15) * driftDirection, .2f), 0);
+        }
+        else
+        {
+            float control = (driftDirection == 1) ? ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, .5f, 2) : ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, 2, .5f);
+            kartModel.parent.localRotation = Quaternion.Euler(0, Mathf.LerpAngle(kartModel.parent.localEulerAngles.y, (control * 15) * driftDirection, .2f), 0);
         }
 
-       
+
         TurnHandler();
         GroundCheckAndNormalHandler();
         //Drifting();
