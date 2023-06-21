@@ -58,7 +58,7 @@ public class KartController : MonoBehaviour
 
     private void Start()
     {
-        sphereRB.transform.parent = null;
+        //sphereRB.transform.parent = null;
     }
 
     private void Update()
@@ -134,6 +134,7 @@ public class KartController : MonoBehaviour
         if (!drifting)
         {
             kartModel.parent.localRotation = Quaternion.Euler(0, Mathf.LerpAngle(kartModel.parent.localEulerAngles.y, ( 0* 15) * driftDirection, .2f), 0);
+            //kartModel.localEulerAngles = Vector3.Lerp(kartModel.localEulerAngles, new Vector3(0, 90 + (Input.GetAxis("Horizontal") * 15), kartModel.localEulerAngles.z), .2f);
         }
         else
         {
@@ -171,7 +172,7 @@ public class KartController : MonoBehaviour
         //Forward Acceleration
         if (drifting)
         {
-            sphereRB.AddForce(-transform.parent.right * _currentSpeed, ForceMode.Acceleration);
+            sphereRB.AddForce(kartModel.transform.right * _currentSpeed, ForceMode.Acceleration);
         }
         else
         {
@@ -189,7 +190,7 @@ public class KartController : MonoBehaviour
 
         //Normal Rotation
         //transform.up = Vector3.Lerp(transform.up, hitNear.normal, Time.deltaTime * 8.0f);
-        //transform.Rotate(0, transform.eulerAngles.y, 0);
+        //kartNormal.Rotate(0, transform.eulerAngles.y, 0);
     }
     private void Drive()
     {
