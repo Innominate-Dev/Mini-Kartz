@@ -68,6 +68,11 @@ public class KartController : MonoBehaviour
         currentRotate = Mathf.Lerp(currentRotate, rotate, Time.deltaTime * 4f); rotate = 0f;
         //transform.Rotate(transform.rotation.x, currentRotate, transform.rotation.z);
 
+        Debug.DrawLine(kartModel.transform.position, kartModel.transform.forward, Color.green);
+        Debug.DrawLine(kartModel.transform.position, -kartModel.transform.forward, Color.blue);
+        Debug.DrawLine(kartModel.transform.position, -kartModel.transform.right, Color.red);
+        Debug.DrawLine(kartModel.transform.position, kartModel.transform.right, Color.magenta);
+
         _forwardAmount = Input.GetAxis("Vertical");
         _turnAmount = Input.GetAxis("Horizontal");
 
