@@ -25,6 +25,8 @@ public class KartController : MonoBehaviour
     float driftPower;
     int driftMode = 0;
     public bool drifting;
+    bool first, second, third;
+    float boost;
 
     [Header("Sound Manager")]
 
@@ -73,6 +75,10 @@ public class KartController : MonoBehaviour
         Debug.DrawLine(kartModel.transform.position, -kartModel.transform.right, Color.red);
         Debug.DrawLine(kartModel.transform.position, kartModel.transform.right, Color.magenta);
 
+        Debug.Log(driftMode + "Drifting Mode");
+        Debug.Log(driftPower + "Drift Power");
+
+
         _forwardAmount = Input.GetAxis("Vertical");
         _turnAmount = Input.GetAxis("Horizontal");
 
@@ -110,8 +116,12 @@ public class KartController : MonoBehaviour
         }
         else
         {
+            if (Input.GetKeyUp(KeyCode.LeftShift) && drifting)
+            {
+                Boost();
+            }
             state = MovementState.moving;
-            drifting = false;
+            
         }
 
 
@@ -123,11 +133,13 @@ public class KartController : MonoBehaviour
             float powerControl = (driftDirection == 1) ? ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, .2f, 1) : ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, 1, .2f);
             Steer(driftDirection, control);
             driftPower += powerControl;
+            ColourDrift();
         }
         else
         {
             Drift.volume = Mathf.Lerp(0, Drift.volume, Time.deltaTime);
         }
+
 
         /*if (drifting)
         {
@@ -232,5 +244,60 @@ public class KartController : MonoBehaviour
     private void Boost()
     {
 
+        drifting = false;
+
+        if(driftMode == 1)
+        {
+           boost = _currentSpeed * 25;
+        }
+        if(driftMode == 2)
+        {
+           boost = _currentSpeed * 50;
+        }
+        if(driftMode == 3)
+        {
+           boost = _currentSpeed * 100;
+        }
+
+        if(driftMode > 0)
+        {
+            sphereRB.AddForce(transform.forward * boost, ForceMode.Impulse);
+            kartModel.Find("ParticleSystem").GetChild(0).GetComponentInChildren<ParticleSystem>().Play();
+            kartModel.Find("ParticleSystem").GetChild(1).GetComponentInChildren<ParticleSystem>().Play();
+            Debug.Log("boost");
+        }
+
+        driftPower = 0;
+        driftMode = 0;
+        first = false; second = false; third = false;
+    }
+
+    public void ColourDrift()
+    {
+        if (driftPower > 50 && driftPower < 100 - 1 && !first)
+        {
+            first = true;
+           
+            driftMode = 1;
+
+            
+        }
+
+        if (driftPower > 100 && driftPower < 150 - 1 && !second)
+        {
+            second = true;
+           
+            driftMode = 2;
+
+           
+        }
+
+        if (driftPower > 150 && !third)
+        {
+            third = true;
+            
+            driftMode = 3;
+
+        }
     }
 }
