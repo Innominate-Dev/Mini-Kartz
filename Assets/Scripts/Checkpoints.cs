@@ -7,17 +7,19 @@ public class Checkpoints : MonoBehaviour
 {
     public int checkpointsCompleted;
     public TextMeshProUGUI checkpoints;
-    public List <GameObject> Checkpoint;
+    public GameObject checkpoint;
     // Start is called before the first frame update
     void Start()
     {
-        //checkpointsCompleted = Checkpoint
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        checkpointsCompleted = checkpoint.transform.childCount;
+        checkpoints.text = (checkpointsCompleted + " Left");
+        Debug.Log(checkpointsCompleted);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,6 +29,7 @@ public class Checkpoints : MonoBehaviour
             checkpointsCompleted = checkpointsCompleted - 1;
             checkpoints.text = (checkpointsCompleted + " Left");
             Destroy(gameObject);
+            
         }
     }
 }

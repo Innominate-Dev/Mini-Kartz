@@ -75,10 +75,6 @@ public class KartController : MonoBehaviour
         Debug.DrawLine(kartModel.transform.position, -kartModel.transform.right, Color.red);
         Debug.DrawLine(kartModel.transform.position, kartModel.transform.right, Color.magenta);
 
-        Debug.Log(driftMode + "Drifting Mode");
-        Debug.Log(driftPower + "Drift Power");
-
-
         _forwardAmount = Input.GetAxis("Vertical");
         _turnAmount = Input.GetAxis("Horizontal");
 
@@ -264,7 +260,6 @@ public class KartController : MonoBehaviour
             sphereRB.AddForce(transform.forward * boost, ForceMode.Impulse);
             kartModel.Find("ParticleSystem").GetChild(0).GetComponentInChildren<ParticleSystem>().Play();
             kartModel.Find("ParticleSystem").GetChild(1).GetComponentInChildren<ParticleSystem>().Play();
-            Debug.Log("boost");
         }
 
         driftPower = 0;
