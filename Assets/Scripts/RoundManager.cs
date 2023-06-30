@@ -13,6 +13,8 @@ public class RoundManager : MonoBehaviour
 
     Animator anim;
 
+    public KartAI AI;
+
     public enum GameState
     {
         Beginning,
@@ -31,8 +33,9 @@ public class RoundManager : MonoBehaviour
     {
         if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.99f && isStarted == false)
         {
-            state = GameState.InProgress;
             isStarted = true;
+            AI.speed = 20f;
+            state = GameState.InProgress;
             PlayerCamera.gameObject.SetActive(true);
         }
     }

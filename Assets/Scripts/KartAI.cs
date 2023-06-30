@@ -68,7 +68,7 @@ public class KartAI : MonoBehaviour
 
             transform.forward = Vector3.RotateTowards(transform.forward, targetRotation, Time.deltaTime, Time.deltaTime);
             //transform.LookAt(waypoints[index].transform.position);
-            if (Vector3.Dot(transform.forward, targetRotation) > 0.9999f)
+            if (Vector3.Dot(transform.forward, targetRotation) > 0.999f)
             {
                 changingDirection = false;
             }
