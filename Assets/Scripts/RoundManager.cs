@@ -6,14 +6,23 @@ public class RoundManager : MonoBehaviour
 {
     public GameState state;
 
+    // GameObjects //
+
     public GameObject PlayerCamera;
     public GameObject roundBeginningCam;
 
+    // Logic //
+
     private bool isStarted;
 
-    Animator anim;
+    [Header("Script References")]
 
     public KartAI AI;
+    public KartController player;
+
+    // Components //
+
+    Animator anim;
 
     public enum GameState
     {
@@ -35,6 +44,7 @@ public class RoundManager : MonoBehaviour
         {
             isStarted = true;
             AI.speed = 20f;
+            player.forwardSpeed = 50f;
             state = GameState.InProgress;
             PlayerCamera.gameObject.SetActive(true);
         }

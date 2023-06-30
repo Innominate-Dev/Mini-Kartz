@@ -5,9 +5,10 @@ using UnityEngine;
 public class KartController : MonoBehaviour
 {
     [SerializeField] private Rigidbody sphereRB;
-    [SerializeField] private float forwardSpeed;
-    [SerializeField] private float turnSpeed;
     [SerializeField] private LayerMask groundLayerMask;
+    [SerializeField] private float turnSpeed;
+
+    public float forwardSpeed;
 
     public Transform kartNormal;
     public Transform kartModel;
@@ -18,6 +19,11 @@ public class KartController : MonoBehaviour
     private float _turnAmount;
     private float rotate, currentRotate;
     private bool isGrounded;
+
+    [Header("Camera")]
+
+    public GameObject ReverseCam;
+    private bool lookingBack;
 
     [Header("Drifting")]
 
@@ -158,7 +164,23 @@ public class KartController : MonoBehaviour
 
         TurnHandler();
         GroundCheckAndNormalHandler();
+        CameraManager();
         //Drifting();
+    }
+
+    private void CameraManager()
+    {
+        if(Input.GetMouseButtonDown(2) && forwardSpeed != 0 && lookingBack == false)
+        {
+            ReverseCam.gameObject.SetActive(true);
+            lookingBack = true;
+        }
+        else if(Input.GetMouseButtonUp(2) && lookingBack == true)
+        {
+            ReverseCam.gameObject.SetActive(false);
+            lookingBack = false;
+        }
+
     }
 
     private void GroundCheckAndNormalHandler()
